@@ -1,0 +1,32 @@
+<%- include('partials/navbar') %>
+
+<%- include('partials/navbarapp') %>
+
+<script language="javascript">
+function Validate() {
+
+}
+</script>
+
+<h2>Customer's list</h2>
+<form action="" method="POST">
+  <fieldset>
+	<!-- Fields -->
+
+	Customer ID: <span id="reqID" class="required" width="200">This is a required field.</span><br>
+	<input type="text" name="txtID" maxlength="15" placeholder="Enter your Customer ID" value="<%=Customer.CustomerID%>" /><br><br>
+
+	Customer Name:&nbsp;<span id="reqName" class="required">This is a required field.</span><br>
+	<input type="text" name="txtName" maxlength="15" placeholder="Enter your Customer name" value="<%=Customer.CustomerName%>" /><br><br>
+	<br />
+	<br />
+
+	<!-- Buttons -->
+	<button id="btnCancel" type="button" OnClick="javascript:location.href = 'http://127.0.0.1:8080/listcustomers'">Cancel</button>
+	<button id="btnSave" type="button" onClick="Validate()">Save</button>
+  </fieldset>
+</form>
+
+
+<%- include('partials/footer') %>
+

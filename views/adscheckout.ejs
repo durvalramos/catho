@@ -1,0 +1,329 @@
+<%- include('partials/navbar') %>
+
+<%- include('partials/navbarapp') %>
+
+<h2>Special Pricing Rules</h2>
+<form action="" method="POST">
+  <table border="0" style="background-color: #CCC;">
+    <tr>
+	<td width="5">
+	  Customer:<br> 
+	  <select id="lstCustomer" onchange="CustomerProduct();">
+		<option value="0">DEFAULT</option>
+		<% QryCustomers.forEach((QryCustomers) => { %>
+		
+		<option value="<%=QryCustomers.CustomerID%>"><%=QryCustomers.CustomerName%></option>
+		<% }) %>
+	  </select>	
+	</td>
+	<td width="5">
+	  Product:<br> 
+	  <select id="lstProduct" onchange="CustomerProduct();document.forms[0].txtQtd.value = 1;">
+		<option value="0">Choose a Product</option>
+		<% QryProducts.forEach((QryProducts) => { %>
+		<option value="<%=QryProducts.id%>"><%=QryProducts.ProductName%></option>
+		<% }) %>
+	  </select>		
+	</td>
+	<td width="5">
+	  Quantity:<br>
+	  <input type="text" name="txtQtd" maxlength="2" size="5" onchange="Validate()" onkeyup="CustomerProduct();Validate()" value="1" />
+	</td>
+	<td width="5">
+	  Price&nbsp;(unitary):<br>
+	  $<label id="lblPrice"></label>	
+	</td>
+	<td width="250">
+	  Discount:<br>
+	  <label id="lblDiscount" for="exemplo">&nbsp;</label>
+	</td>
+	<td width="40">
+	  SubTotal:<br>
+	  <b>$<label id="lblSubTotal">0.00</label></b>
+	</td>
+	<td><button id="btnSave" type="button" onClick="UpdateOrder()">Update Order</button></td>
+    </tr>
+  </table>
+
+    <!-- ORDER - Job ads checkout -->	
+  <table border="1">
+	<thead>
+	  <tr>
+	    <th colspan="6" class="cabecalho">Order - Job Ads</th>
+	  </tr>
+	  <tr>
+	    <th>Customer</th>
+	    <th>SKUs Scanned</th>
+	    <th>Quantity</th>
+	    <th>SubTotal</th>
+	    <th colspan="2">Total expected</th>
+	  </tr>
+	</thead>				
+
+	<tbody id="tblOrder">
+	</tbody>
+	
+  </table>
+</form>
+
+<%- include('partials/footer') %>
+
+
+
+<script type="text/javascript">
+var arPriceRules = new Array();
+var arPriceProducts = new Array();
+
+var arOrderCustomer = new Array();
+var arCustomerAdd = new Array();
+var arOrderCustomer = new Array();
+
+var iCountCustomers = 0;
+
+<% 
+//Creating arrays in JS
+var vCodCustomer = 0;
+var vCodProduct = 0;
+
+/*************************************/
+// Load "Special Price" rules
+QryPriceRules.forEach((QryPriceRules) => { 
+//Create a new Array Dimentional (Customer)
+if (vCodCustomer != QryPriceRules.CustomerID) {
+	vCodCustomer = QryPriceRules.CustomerID;
+%>
+	arPriceRules[<%=vCodCustomer%>] = new Array();
+<%
+}
+
+//Create a new Array Dimentional (Product)
+if (vCodProduct != QryPriceRules.ProductID) {
+	vCodProduct = QryPriceRules.ProductID;
+%>
+	arPriceRules[<%=vCodCustomer%>][<%=vCodProduct%>] = new Array();
+<%
+}
+%>
+	arPriceRules[<%=vCodCustomer%>][<%=vCodProduct%>][0] = '<%=QryPriceRules.PriceRulesName%>';
+	arPriceRules[<%=vCodCustomer%>][<%=vCodProduct%>][1] = '<%=QryPriceRules.QtdMinDiscount%>';
+	arPriceRules[<%=vCodCustomer%>][<%=vCodProduct%>][2] = '<%=QryPriceRules.NewPrice%>';
+	arPriceRules[<%=vCodCustomer%>][<%=vCodProduct%>][3] = '<%=QryPriceRules.AddMoreProduct%>';
+<% }) 
+
+/*************************************/
+// Load "Products Price"
+QryProducts.forEach((QryProducts) => { 
+%>
+	arPriceProducts[<%=QryProducts.id%>] = <%=QryProducts.Price%>;
+<% }) %>
+
+function CustomerProduct() {
+
+	var selCustomer = document.forms[0].lstCustomer;
+	var selProduct = document.forms[0].lstProduct;
+
+	var CodCustomer = selCustomer.options[selCustomer.selectedIndex].value;
+	var CodProduct = selProduct.options[selProduct.selectedIndex].value;
+	
+	try {
+		document.getElementById("lblPrice").innerHTML = arPriceProducts[CodProduct];
+		
+		try {
+			if (CodProduct > 0) {
+				document.getElementById("lblDiscount").innerHTML = arPriceRules[CodCustomer][CodProduct][0];			
+
+				var vQtd = document.forms[0].txtQtd.value;
+				var vAddProduct = arPriceRules[CodCustomer][CodProduct][3];
+				vAddProduct = (vAddProduct == '')?0:vAddProduct;
+
+				if (vQtd >= arPriceRules[CodCustomer][CodProduct][1]) {
+					document.getElementById("lblPrice").innerHTML = arPriceRules[CodCustomer][CodProduct][2]; // / (vAddProduct + 1);
+				}
+				else {
+					document.getElementById("lblPrice").innerHTML = arPriceProducts[CodProduct];				
+				}
+			}
+			else {
+				document.getElementById("lblPrice").innerHTML = '0.00';
+				document.getElementById("lblSubTotal").innerHTML = '0.00';			
+			}
+		}
+		catch(err) {
+			ClearDiscount();		
+		}
+		
+		Validate();		
+	}
+	catch(err) {
+		alert('erro');
+		ClearDiscount();		
+		Product();
+	}
+    
+}
+
+function ClearDiscount() { document.getElementById("lblDiscount").innerHTML = '&nbsp;'; }
+
+function Validate() {
+	var vQtd = document.forms[0].txtQtd.value;
+
+	if (! isNaN(vQtd) ) {
+		if ( vQtd > 0 ) {
+			var vValor = document.getElementById("lblPrice").innerHTML; 
+		
+			document.getElementById("lblSubTotal").innerHTML = parseFloat(vValor) * parseFloat(vQtd);
+		}
+		else {
+			document.getElementById("lblSubTotal").innerHTML = 0.00;
+		}
+	}
+	else {
+		alert('Fill a number');
+		document.forms[0].txtQtd.value = '';	
+	}
+}
+
+
+//Load data to form
+function Edit(CodCustomer,CodProduct,Qtd,Price) {
+	var selCustomer = document.forms[0].lstCustomer;
+	var selProduct = document.forms[0].lstProduct;
+
+	selCustomer.selectedIndex = CodCustomer;
+	selProduct.selectedIndex = CodProduct;
+
+	document.forms[0].txtQtd.value = Qtd;
+	document.getElementById("lblPrice").innerHTML = Price;
+	document.getElementById("lblSubTotal").innerHTML = parseFloat(Price) * parseFloat(Qtd);
+	document.getElementById("lblDiscount").innerHTML = '&nbsp;';
+}
+
+//Add or Edit data to "tbody" in "Order - Job Ads"
+function UpdateOrder() {
+	var selCustomer = document.forms[0].lstCustomer;
+	var selProduct = document.forms[0].lstProduct;
+	var Qtd = document.forms[0].txtQtd.value;
+	var Price = document.getElementById("lblPrice").innerHTML;
+	var IdxCustomer = selCustomer.selectedIndex;
+
+	var IdxProduct = selProduct.selectedIndex;
+	if (IdxProduct <=0) {
+		alert('Select a Product');
+		return false;
+	}
+
+	var CodCustomer = selCustomer.options[selCustomer.selectedIndex].value;
+	var CodProduct = selProduct.options[selProduct.selectedIndex].value;
+
+	var NmCustomer = selCustomer.options[selCustomer.selectedIndex].text;
+	var NmProduct = selProduct.options[selProduct.selectedIndex].text;
+
+	arCustomerAdd[arCustomerAdd.length] = NmCustomer;
+
+
+	var aux = 0;
+	function checkSelectedArray(item, index) { if (NmCustomer == item) { aux = aux + 1; } }
+
+
+/*arOrderCustomer.sort(sortFunction);*/
+
+function sortFunction(row1, row2) {
+    if (row1[0] === row2[0]) {
+        return 0;
+    }
+    else {
+        return (row1[0] < row2[0]) ? -1 : 1;
+    }
+}
+
+
+//Array to Order Customer
+var iRow = arOrderCustomer.length;
+var vCustomerProductFound = false;
+
+for (var iCount = 0; iCount < arOrderCustomer.length; iCount++) {
+	if ((arOrderCustomer[iCount][1] == NmCustomer) && (arOrderCustomer[iCount][3] == NmProduct)) {	
+		vCustomerProductFound = true;
+		iRow = iCount;
+		break;
+	}
+}
+
+if (!vCustomerProductFound) {
+	arOrderCustomer[iRow] = new Array();
+}
+
+try {
+	if (parseInt(arPriceRules[CodCustomer][CodProduct][1]) > 0) {
+		if (document.getElementById("lblDiscount").innerHTML.indexOf('deal on') > 0) {
+			if (Qtd >= parseInt(arPriceRules[CodCustomer][CodProduct][1])) {
+				Qtd = parseInt(Qtd) + (parseInt(Qtd) / parseInt(arPriceRules[CodCustomer][CodProduct][1]));
+				if (Qtd.toString().indexOf('.') > 0){
+					Qtd = parseInt(Qtd.toString().substring(0,1));
+				}
+			}
+		}
+	}
+}
+catch(err) {
+    document.getElementById("lblDiscount").innerHTML = '&nbsp;';
+}
+
+arOrderCustomer[iRow][0] = IdxCustomer;
+arOrderCustomer[iRow][1] = NmCustomer;
+arOrderCustomer[iRow][2] = IdxProduct;
+arOrderCustomer[iRow][3] = NmProduct;
+arOrderCustomer[iRow][4] = Qtd;
+arOrderCustomer[iRow][5] = Price;
+
+arOrderCustomer.sort(sortFunction);
+
+//Clear Order table 
+while(tblOrder.rows.length > 0) {
+  tblOrder.deleteRow(0);
+}
+
+vTotal = 0;
+vRowTotal = 0;
+vSameCustomer = '';
+for (var iCount = 0; iCount < arOrderCustomer.length; iCount++) {
+	//Define "SubTotal" and "Total"
+	vUnit = parseFloat(arOrderCustomer[iCount][4]) * parseFloat(arOrderCustomer[iCount][5]);
+	if (vSameCustomer != arOrderCustomer[iCount][1]) { vTotal = 0; aux = 0;}
+	vTotal = vTotal + vUnit;
+	
+	if (vSameCustomer != arOrderCustomer[iCount][1]) {
+		 
+		var tr = document.createElement('tr');
+
+		NmCustomer = arOrderCustomer[iCount][1];
+		arCustomerAdd.forEach(checkSelectedArray);
+
+		iCountCustomers = aux;
+		if (iCountCustomers > 3) { iCountCustomers = 3; }
+
+		tr.innerHTML ='<td rowspan="' + iCountCustomers + '">' + arOrderCustomer[iCount][1] + '</td><td>' + arOrderCustomer[iCount][3] + '</td><td>' + arOrderCustomer[iCount][4] + '</td><td>$' + (vUnit) + '</td><td rowspan="' + iCountCustomers + '">$' + vTotal + '</td><td><button id="btnEdit" type="button" onClick="Edit(' + arOrderCustomer[iCount][0] + ',' + arOrderCustomer[iCount][2] + ',' + arOrderCustomer[iCount][4] + ',' + arOrderCustomer[iCount][5] + ')">Edit</button></td>'
+		OrderTable.appendChild(tr);
+		
+		vSameCustomer = arOrderCustomer[iCount][1];
+		vRowTotal = iCount;
+	}
+	else {
+		var tr2 = document.createElement('tr');
+		tr2.innerHTML ='<td>' + arOrderCustomer[iCount][3] + '</td><td>' + arOrderCustomer[iCount][4] + '</td><td>$' + vUnit + '</td><td><button id="btnEdit" type="button" onClick="Edit(' + arOrderCustomer[iCount][0] + ',' + arOrderCustomer[iCount][2] + ',' + arOrderCustomer[iCount][4] + ',' + arOrderCustomer[iCount][5] + ')">Edit</button></td>';
+
+		OrderTable.appendChild(tr2);
+		
+		var tbl = document.getElementById('tblOrder');
+		//alert(tbl.rows[0].childNodes[4].innerHTML);
+		
+		tbl.rows[vRowTotal].childNodes[4].innerHTML = '$' + vTotal;
+	}
+}
+
+//alert(OrderTable.innerHTML);      
+}
+
+var OrderTable = document.getElementById('tblOrder');
+var xTable = OrderTable.innerHTML;
+</script>

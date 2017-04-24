@@ -1,0 +1,74 @@
+
+a { text-decoration: none; color: #555;}
+
+a:hover {
+	cursor: pointer; 
+	color: #000;
+	text-decoration: underline;
+}
+
+body {
+	font-family: Arial, Helvetica, Verdana;
+	font-size: 62.5%;
+	color: #555;
+	background: #fff;
+	min-height: 100%;
+	position: relative;
+
+}
+
+#mainwrap {
+	font-size: 1.2em;
+	line-height: 160%;
+	
+}
+
+h1, h2, h3, h4, h5 { font-weight: normal; color: #999; }
+
+h1, h2, h3, h4, h5, p, ul { margin: 10px 0; }
+
+h1 { font-size: 3em; }
+
+h2 { font-size: 2.4em; font-weight: bold; text-align: center; }
+
+h3 { font-size: 2.2em; text-align: left; }
+
+h4 { font-size: 1.8em; text-transform: uppercase; }
+
+ul li { margin-left: 15px; margin-bottom: 5px; }
+
+button {
+	padding: 2px 8px;
+	border: 1px solid #47210C;
+	font-variant: small-caps;
+	background-color: #35A83A; 
+	color: #000;
+	cursor:pointer;
+}
+
+.clr { clear: both; }
+
+.inputbox {
+	border: 1px solid #47210C;
+	padding: 3px 2px;
+	background: #8A5C2B;
+}
+
+table { border-collapse: collapse; width: 60%; position: relative; margin: 70px }
+
+th, td { text-align: left; padding: 8px; }
+
+th { background-color: #AAA; color: #FFF; }
+
+tr:nth-child(even){ background-color: #F2F2F2}
+
+
+fieldset{
+  border: 1px solid rgb(126,126,126);
+  width: 400px;
+  margin:auto;
+}
+
+.required { color: red; display: none; }
+
+.cabecalho { text-align:center; color: #000; font-size: 1.8em; }

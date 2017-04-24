@@ -1,0 +1,47 @@
+<%- include('partials/navbar') %>
+
+<div id="container-wrap" class="wrap">
+    <div id="container" class="pagesize clearfix">
+	<div id="leftcol">
+		<div class="inner">
+		  <h3>About me</h3>
+		  <p>I'm highly motivated to share my knowledge and take on responsibility for the technical effort of design and software development in Brazil.</p>
+		  <p>I've been working as IT Manager and Technical Team Leader with over 7 years. Read more details at <a href="/resume">my Resume</a>.</p>
+		</div>
+	</div>
+	<div id="maincol">
+		<div id="banner" class="clearfix">
+		  <div id="banner-content">
+		    <h1>Durval Ramos Junior</h1>
+		    <p class="f14"><%= myInfo[0].value %></p>
+		  </div>
+	</div>
+	<div id="content-wrap">
+	  <div id="content" class="clearfix">
+	    <h3 class="content f14">Welcome</h3>
+	    <p>This demo is a little to show Knowledge of more than one of these programming languages, but also about construction concepts of a developing process for Web based expert systems. </p>
+	    <p class="yellow"><strong>In order to view the test run details, use "Test Evidence - Durval Ramos Jr.docx" document on root directory of this exercise. Please contact me for more information.</strong></p>
+	    <p>The test code seeks to demonstrate a flexibility system and my understanding of the life cycle of technology. See how it relates to the productivity and creativity when it comes to problem solving.
+	    For reviewed and .</p>
+	    <p>The data are stored on SQLite to query and install this Web application with more facility. I believe that my skills and technical experience can be viewed here and useful to all us.
+	    I also believe that an opportunity with your firm will provide me with priceless experiences in not only my field of focus, but all other business activities.</p>
+
+	  </div>
+	</div>
+
+	    <%- include('partials/footer') %>
+	</div>
+	<div id="rightcol">
+	  <div class="inner">
+		  <!-- loop over blog posts and render them -->
+		  <% myInfo.forEach((myInfo) => { %>
+
+			<p align="left"><%= myInfo.key %> <%= myInfo.value %></p>
+
+		  <% }) %>
+	  </div>
+	</div>
+    </div>
+</div>
+
+

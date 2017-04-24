@@ -1,0 +1,12 @@
+<%- include('partials/navbar') %>
+
+<div id="posiciona"> 
+	<img src="images/durval.jpg" alt="Durval Ramos Jr - Tech Lead" widht="300" height="300" />
+</div>
+
+<!-- loop over blog posts and render them -->
+<% myInfo.forEach((myInfo) => { %>
+
+<h2><b><%= myInfo.key %></b><br><%= myInfo.value %></h2>
+
+<% }) %>  

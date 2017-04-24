@@ -1,0 +1,40 @@
+<%- include('partials/navbar') %>
+
+<%- include('partials/navbarapp') %>
+
+  <script language="javascript">
+  	function Validate() {
+		document.getElementById('reqID').style.display = 'block';
+		//document.getElementById('reqID').style.display = 'none';
+		document.getElementById('reqName').style.display = 'block';
+		document.getElementById('reqPrice').style.display = 'block';
+	}
+  </script>
+  <body>
+	<h2>Product's list</h2>
+	<form action="" method="POST">
+	  <fieldset>
+		<!-- Fields -->
+
+		Product ID: <span id="reqID" class="required" width="200">This is a required field.</span><br>
+		<input type="text" name="txtID" maxlength="15" placeholder="Enter your Product ID" /><br><br>
+
+		Product Name:&nbsp;<span id="reqName" class="required">This is a required field.</span><br>
+		<input type="text" name="txtName" maxlength="15" placeholder="Enter your Product name" /><br><br>
+
+		Price:&nbsp;<span id="reqPrice" class="required">This is a required field.</span><br>
+		<input type="text" name="txtPrice" maxlength="8" placeholder="Enter your Product price" /><br><br>
+
+		<br />
+		<br />
+
+		<!-- Buttons -->
+		<button id="btnCancel" type="button" OnClick="javascript:location.href = 'http://127.0.0.1:8080/listproducts'">Cancel</button>
+		<button id="btnAdd" type="button" onClick="Validate()">Add</button>
+	  </fieldset>
+	</form>
+  </body>
+</html>
+
+<%- include('partials/footer') %>
+

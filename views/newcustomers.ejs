@@ -1,0 +1,28 @@
+<%- include('partials/navbar') %>
+
+<%- include('partials/navbarapp') %>
+
+  <body>
+	<h2>Customer's list</h2>
+	<form action="" method="POST">
+	  <fieldset>
+		<!-- Fields -->
+
+		Customer ID: <span id="reqID" class="required" width="200">This is a required field.</span><br>
+		<input type="text" name="txtID" maxlength="15" placeholder="Enter your Customer ID" /><br><br>
+
+		Customer Name:&nbsp;<span id="reqName" class="required">This is a required field.</span><br>
+		<input type="text" name="txtName" maxlength="15" placeholder="Enter your Name" /><br><br>
+		<br />
+		<br />
+
+		<!-- Buttons -->
+		<button id="btnCancel" type="button" OnClick="javascript:location.href = 'http://127.0.0.1:8080/listcustomers'">Cancel</button>
+		<button id="btnAdd" type="button" onClick="">Add</button>
+	  </fieldset>
+	</form>
+  </body>
+</html>
+
+<%- include('partials/footer') %>
+

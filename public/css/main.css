@@ -1,0 +1,187 @@
+/*========================================= 
+Comment layouts
+=========================================*/
+
+div.wrap {
+	text-align: center;
+}
+
+div.pagesize {
+	width: 919px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+div.module-box {
+	width: 100%;
+}
+
+div.module-box div.inner {
+	padding: 10px 24px;
+}
+
+div.vernav {
+	margin: 0;
+}
+
+div.vernav ul {
+	margin: 0;
+	padding: 0;
+}
+
+div.vernav li {
+	list-style-type: none;
+	margin: 0 10px 0 0;
+	padding: 0;
+}
+
+div.vernav ul li, div.vernav ul li a, div.vernav ul li, div.vernav ul li a span {
+	float: left;
+	display: block;
+}
+
+
+/*========================================= 
+Main Menu 
+=========================================*/
+#topnav {
+	margin-top: 30px;
+	float: right;
+}
+
+#topnav a {
+	margin-left: 8px;
+}
+
+#mainnav-wrap {
+	height: 40px;
+	background: url(../images/mainnav_bg.gif) left top repeat-x;
+}
+
+#mainnav {
+	text-align: center;
+}
+
+#mainnav ul {
+	margin: 0 auto;
+	text-align: left;
+}
+
+#mainnav ul li {
+	margin: 0;
+}
+
+#mainnav ul li a span {
+	height: 40px;
+	line-height: 46px;
+	background: url(../images/mainnav_sep.gif) right top no-repeat;
+	padding: 0 20px;
+	font-weight: bold;
+}
+
+#mainnav ul li a#active span {
+	color: #cc9900;
+	font-weight: bold;
+}
+
+
+
+
+/*========================================= 
+Home
+=========================================*/
+#container-wrap {
+	background: #fff url(../images/bg_rp.jpg) left top repeat-x;
+	height: 500px;
+}
+
+#leftcol {
+	background: #fff url(../images/leftcol_bg.jpg) right top no-repeat;
+	width: 185px;
+	height: 500px;
+	float: left;
+}
+
+#rightcol {
+	background: #fff url(../images/rightcol_bg.jpg) left top no-repeat;
+	width: 185px;
+	height: 500px;
+	float: right;
+}
+
+#maincol {
+	width: 549px;
+	float: left;
+	height: 800px;
+}
+
+#banner {
+	height: 214px;
+	background: url(../images/main_header.jpg) left top no-repeat;
+}
+
+#content-wrap {
+	background: url(../images/main_footer.jpg) left top repeat-y;
+}
+
+#content {
+	background: url(../images/main_footer1.jpg) left bottom no-repeat;
+	padding: 6px 15px 35px;
+}
+
+#banner-content {
+	margin: 90px 25px 0 0;
+	width: 325px;
+	text-align: right;
+	float: right;
+}
+
+#banner {
+	color: #fff;
+}
+
+#banner h1 {
+	font-size: 24px;
+	color: #fff;
+	margin-bottom: 8px;
+}
+
+.content {
+	color: #000;
+	font-weight: bold;
+}
+
+.f14 {
+	font-size: 14px;
+}
+
+img.left {
+	float: left;
+	margin: 5px 10px 0 0;
+}
+
+#footer {
+	padding: 18px 0;
+	color: #000;
+	font-size: 12px;
+	text-align: center;
+	font-weight: bold;
+	
+}
+
+div.inner {
+	padding: 25px 12px;
+	color: #555;
+}
+
+/*========================================= 
+Contact
+=========================================*/
+#posiciona {
+position: absolute; 
+left: 40%; 
+top: 55%;
+width: 50px;
+height: 50px;
+z-index: 1;
+}

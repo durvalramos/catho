@@ -1,0 +1,50 @@
+<%- include('partials/navbar') %>
+
+<%- include('partials/navbarapp') %>
+
+<script language="javascript">
+function Question(cod, name) {
+	if(confirm('Are you sure you want to delete "' + name + '"?')) {
+		return true;
+	}
+}
+</script>
+		<h3>Product's list</h3>
+
+		<table border="1">
+			<thead>
+			  <tr>
+			    <th>ID</th>
+			    <th>Name</th>
+			    <th>Price</th>
+			    <th>Created</th>
+			    <th>Last Updated</th>
+			    <th colspan="2">&nbsp;</th>
+			  </tr>
+			</thead>
+			<tfoot>
+			  <tr>
+			    <th colspan="7" align="right"><em><a href="newproducts">(+) Add new Product</a></em></th>
+			  </tr>
+			</tfoot>			
+			<tbody>	
+			
+			<% QryProducts.forEach((QryProducts) => { %>
+			
+			<tr> 
+			  <td><%=QryProducts.ProductID%></td>
+			  <td><%=QryProducts.ProductName%></td>
+			  <td><%=QryProducts.Price%></td>
+			  <td><%=QryProducts.created_at%></td>
+			  <td><%=QryProducts.updated_at%></td>
+			  <td><a href="formproducts/<%=QryProducts.id%>">Edit</a></td>
+			  <td><a href="javascript:Question(<%=QryProducts.id%>, '<%=QryProducts.ProductName%>')">Delete</a></td>
+			</tr>
+	
+			<% }) %>
+
+			</tbody>						
+		</table>
+
+<%- include('partials/footer') %>
+

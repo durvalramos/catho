@@ -1,0 +1,45 @@
+<%- include('partials/navbar') %>
+
+<%- include('partials/navbarapp') %>
+
+<script language="javascript">
+function Question(cod, name) {
+	if(confirm('Are you sure you want to delete "' + name + '"?')) {
+		return true;
+	}
+}
+</script>
+		<h3>Price Rules's list</h3>
+
+		<table border="1">
+			<thead>
+			  <tr>
+			    <th>ID</th>
+			    <th>Name</th>
+			    <th>Qtd Minimum to Discount</th>
+			    <th>New Price</th>
+			    <th>Add Product (promotion&nbsp;deal)</th>
+			    <th colspan="2">&nbsp;</th>
+			  </tr>
+			</thead>			
+			<tbody>	
+			
+			<% QryPriceRules.forEach((QryPriceRules) => { %>
+			
+			<tr> 
+			  <td><%=QryPriceRules.PriceRulesID%></td>
+			  <td><%=QryPriceRules.PriceRulesName%></td>
+			  <td><%=QryPriceRules.QtdMinDiscount%></td>
+			  <td><%=QryPriceRules.NewPrice%></td>
+			  <td><%=QryPriceRules.AddMoreProduct%></td>
+			  <td><a href="#/<%=QryPriceRules.id%>">Edit</a></td>
+			  <td><a href="javascript:Question(<%=QryPriceRules.PriceRulesID%>, '<%=QryPriceRules.PriceRulesName%>')">Delete</a></td>
+			</tr>
+	
+			<% }) %>
+
+			</tbody>						
+		</table>
+
+<%- include('partials/footer') %>
+
