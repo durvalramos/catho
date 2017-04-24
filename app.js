@@ -110,30 +110,18 @@ app.get('/contact', (req, res) => {
 app.get('/adscheckout', (req, res) => {
   // render `adscheckout.ejs` with Customers / Product's list
 
-
-		//console.log(row.id + ": " + row.ProductName + " - " + row.Price);
-	  // render the `post.ejs` template with the post content
-	  res.render('adscheckout', { txtTitle:txtTitle, vLink:vLink, QryProducts:QryProducts, QryCustomers:QryCustomers, QryPriceRules:QryPriceRules })
+  res.render('adscheckout', { txtTitle:txtTitle, vLink:vLink, QryProducts:QryProducts, QryCustomers:QryCustomers, QryPriceRules:QryPriceRules })
 })
 
 // Product's pages
 app.get('/listproducts', (req, res) => {
   // render `listproducts.ejs` with Product's list
 
-
-  db.run("DELETE FROM products WHERE id = ?", 5,
-  	function(err) {	if (err) throw err;	}
-  );
-
   res.render('listproducts', { QryProducts:QryProducts, vLink:vLink, txtTitle:txtTitle })
 })
 
 app.get('/formproducts', (req, res) => {
   // render `formproducts.ejs` with Product's form
-
-	db.run("UPDATE products SET ProductName = ?, Price = ? WHERE id = ?", 'Testando o UPDATE', 222.99, 5,
-		function(err) {	if (err) throw err;	}
-	);
 
   res.render('formproducts', { txtTitle:txtTitle, vLink:vLink })
 })
