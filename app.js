@@ -39,43 +39,6 @@ const sqlite = require('sqlite3');
 //Open Database connection
 let db = new sqlite.Database('./db/development.sqlite3');
 
-/*
-db.serialize(() => {
-	db.all('SELECT * FROM products', (err, rows) => {
-		console.log(rows);
-	});
-});
-
-db.serialize(() => {
-	db.all('SELECT * FROM privileged_customers', (err, rows) => {
-		console.log(rows);
-	});
-});
-
-
-db.serialize(() => {
-	db.all('SELECT * FROM price_rules', (err, rows) => {
-		console.log(rows);
-	});
-});
-
-
-db.all("SELECT * FROM products", function(err, rows) {
-        rows.forEach(function (row) {
-            console.log(row.id + ": " + row.ProductName + " - " + row.Price);
-        });
-       // closeDb();
-});
-*/
-
-/*
-db.all("SELECT * FROM products WHERE ProductId = ?", function(err, rows) {
-        rows.forEach(function (row) {
-            console.log(row.id + ": " + row.ProductName + " - " + row.Price);
-        });
-        closeDb();
-});*/
-
 var QryProducts;
 db.all("SELECT * FROM products ORDER BY ProductName", function(err, rows) {
 	if (err) throw err;
@@ -99,52 +62,6 @@ db.all("SELECT * FROM price_rules INNER JOIN privileged_customers ON price_rules
 	QryPriceRules = rows;
 });
 
-/*
-db.get("SELECT * FROM products WHERE id = ?", 1, function(err, row) {
-	if (err) throw err;
-
-	console.log(row.id + ": " + row.ProductName + " - " + row.Price);
-
-});
-*/
-
-/*
-db.run("INSERT INTO products (id, ProductId, ProductName, Price, created_at, updated_at) VALUES(?, ?, ?, ?, ?, ?)", 5, 'teste', 'Testando o INSERT', 111.99, '2017-04-17 22:22:40', '2017-04-17 22:22:40',
-	function(err) {	if (err) throw err;	}
-);
-*/
-
-db.run("UPDATE price_rules SET NewPrice = ? WHERE PriceRulesID = ? AND ProductID = ?", 269.99, 2, 1,
-	function(err) {	if (err) throw err;	}
-);
-
-
-
-
-/*
-db.run("INSERT INTO privileged_customers VALUES (4, 6)",
-	function(err) {	if (err) throw err;	}
-);
-
-db.run("DROP TABLE privileged_customers;",
-	function(err) {	if (err) throw err;	}
-);
-*/
-
-/*
-db.run("CREATE TABLE privileged_customers (CustomerID INTEGER, PriceRulesID INTEGER);",
-	function(err) {	if (err) throw err;	}
-);
-
-db.run("DROP TABLE price_rules;",
-	function(err) {	if (err) throw err;	}
-);
-
-db.run("CREATE TABLE price_rules (PriceRulesID INTEGER, ProductID INTEGER, PriceRulesName TEXT, QtdMinDiscount INTEGER, NewPrice REAL);",
-	function(err) {	if (err) throw err;	}
-);*/
-
-//closeDb();
 
 //Close Database connection
 function closeDb() {
@@ -313,6 +230,3 @@ app.use(express.static(__dirname + '/public'));
 app.listen(8080)
 
 console.log('listening on port 8080')
-
-
-
